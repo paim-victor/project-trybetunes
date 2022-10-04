@@ -6,8 +6,7 @@ class ProfileEdit extends Component {
     return (
       <>
         <Header />
-        <div data-testid="page-profile-edit">
-        </div>
+        <div data-testid="page-profile-edit" />
       </>
     );
   }

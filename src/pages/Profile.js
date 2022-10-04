@@ -5,10 +5,10 @@ class Profile extends Component {
   render() {
     return (
       <>
-      <Header />
-      <div data-testid="page-profile">
-        <div data-testid="page-profile-edit" />
-      </div>
+        <Header />
+        <div data-testid="page-profile">
+          <div data-testid="page-profile-edit" />
+        </div>
       </>
     );
   }

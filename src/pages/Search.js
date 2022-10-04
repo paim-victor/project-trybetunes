@@ -5,9 +5,8 @@ class Search extends Component {
   render() {
     return (
       <>
-      <Header />
-      <div data-testid="page-search">
-      </div>
+        <Header />
+        <div data-testid="page-search" />
       </>
     );
   }
