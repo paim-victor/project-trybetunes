@@ -1,16 +1,16 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Carregando from '../components/Carregando';
 import { createUser } from '../services/userAPI';
 
 export default class Login extends Component {
   state = {
-    carregando: false,
+    loading: false,
     desativado: true,
     entrada: '',
   };
 
-  botaoValid = () => {
+  buttonOpen = () => {
     const { entrada } = this.state;
     const MIN_LENG = 3;
     if (entrada.length >= MIN_LENG) {
@@ -20,27 +20,27 @@ export default class Login extends Component {
     }
   };
 
-  entradaValida = ({ a }) => {
-    const { nome, valor } = a;
+  validaInput = ({ target }) => {
+    const { name, value } = target;
     this.setState({
-      [nome]: valor,
-    }, this.botaoValid);
+      [name]: value,
+    }, this.buttonOpen);
   };
 
-  click = () => {
+  lidaClick = () => {
     const { history } = this.props;
     const { entrada } = this.state;
     this.setState({
-      carregando: true,
+      loading: true,
     }, async () => {
-      await createUser({ nome: entrada });
+      await createUser({ name: entrada });
       history.push('/search');
     });
   };
 
   render() {
-    const { desativado, carregando } = this.state;
-    if (carregando) {
+    const { desativado, loading } = this.state;
+    if (loading) {
       return (<Carregando />);
     }
 
@@ -50,20 +50,19 @@ export default class Login extends Component {
         <label htmlFor="login-input">
           <input
             id="login-input"
-            nome="entrada"
+            name="entrada"
             type="text"
-            data-testid="login-nome-input"
-            onChange={ this.entradaValida }
+            data-testid="login-name-input"
+            onChange={ this.validaInput }
           />
         </label>
         <button
-          type="button"
           data-testid="login-submit-button"
+          type="button"
           disabled={ desativado }
-          onClick={ this.click }
+          onClick={ this.lidaClick }
         >
           Entrar
-
         </button>
       </div>
     );
