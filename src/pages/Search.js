@@ -5,18 +5,18 @@ import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import InputButton from './InputButton';
 
-const obj = {
-  entradaProcurar: '',
-  desabilitado: true,
+const objPadrao = {
+  inputSearch: '',
+  isDesabled: true,
   album: [],
 };
 
-export default class Procurar extends Component {
+export default class Search extends Component {
   state = {
-    ...obj,
-    procurar: '',
+    ...objPadrao,
+    search: '',
     loading: false,
-    botaoProcurar: false,
+    btnSearch: false,
   };
 
   entrada = ({ target }) => {
@@ -25,26 +25,26 @@ export default class Procurar extends Component {
       [name]: value,
     }, () => {
       this.setState((prev) => ({
-        desabilitado: (prev.entradaProcurar.length <= 1),
+        isDesabled: (prev.inputSearch.length <= 1),
       }));
     });
   };
 
   click = () => {
     this.setState((prev) => ({
-      procurar: prev.entradaProcurar,
+      search: prev.inputSearch,
       loading: true,
-      botaoProcurar: false,
+      btnSearch: false,
     }), () => {
       this.setState({
-        ...obj,
+        ...objPadrao,
       }, async () => {
-        const { procurar } = this.state;
-        const resposta = await searchAlbumsAPI(procurar);
+        const { search } = this.state;
+        const resposta = await searchAlbumsAPI(search);
         this.setState({
           album: resposta,
           loading: false,
-          botaoProcurar: true,
+          btnSearch: true,
         }, () => {
           console.log(this.state);
         });
@@ -53,32 +53,32 @@ export default class Procurar extends Component {
   };
 
   render() {
-    const { entradaProcurar, desabilitado, loading,
-      procurar, album, botaoProcurar } = this.state;
+    const { inputSearch, isDesabled,
+      loading, search, album, btnSearch } = this.state;
     return (
       <>
         <Header />
-        <div data-testid="page-procurar">
+        <div data-testid="page-search">
           {loading ? <Carregando /> : (
             <InputButton
               click={ this.click }
-              desabilitado={ desabilitado }
+              isDesabled={ isDesabled }
               entrada={ this.entrada }
-              entradaProcurar={ entradaProcurar }
+              inputSearch={ inputSearch }
             />
           )}
           {
-            botaoProcurar && (album.length === 0) ? <p>Nenhum álbum foi encontrado</p> : (
-              botaoProcurar && (
+            btnSearch && (album.length === 0) ? <p>Nenhum álbum foi encontrado</p> : (
+              btnSearch && (
                 <>
-                  <p>{`Resultado de álbuns de: ${procurar}`}</p>
-                  {album.map((elemento, indice) => (
+                  <p>{`Resultado de álbuns de: ${search}`}</p>
+                  {album.map((el, i) => (
                     <Link
-                      data-testid={ `link-to-album-${elemento.collectionId}` }
-                      to={ `/album/${elemento.collectionId}` }
-                      key={ indice + elemento.collectionId }
+                      data-testid={ `link-to-album-${el.collectionId}` }
+                      to={ `/album/${el.collectionId}` }
+                      key={ i + el.collectionId }
                     >
-                      <p key={ indice }>{JSON.stringify(elemento)}</p>
+                      <p key={ i }>{JSON.stringify(el)}</p>
                     </Link>
                   ))}
                 </>
