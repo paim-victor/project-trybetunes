@@ -15,7 +15,7 @@ function App() {
       <Route path="/search" component={ Search } />
       <Route path="/album/:id" component={ Album } />
       <Route path="/favorites" component={ Favorites } />
-      <Route  path="/profile" component={ Profile } />
+      <Route path="/profile" component={ Profile } />
       <Route path="/profile/edit" component={ ProfileEdit } />
       <Route path="*" component={ NotFound } />
     </Switch>
