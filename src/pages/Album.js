@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Header from '../components/Header';
 import Carregando from '../components/Carregando';
-import CardsMusicas from '../components/CardsMusicas';
+import MusicCard from '../components/MusicCard';
 import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 import getMusics from '../services/musicsAPI';
@@ -30,14 +30,14 @@ export default class Album extends React.Component {
 
   render() {
     const { album, loading } = this.state;
-    const checkado = (music) => {
+    const isChecked = (music) => {
       const { favorites } = this.state;
       return favorites.some((fav) => fav.trackId === music.trackId);
     };
 
-    const favCheck = async (music) => {
+    const checkFavorite = async (music) => {
       const { favorites } = this.state;
-      if (checkado(music)) {
+      if (isChecked(music)) {
         this.setState({ loading: true });
         await removeSong(music);
         const favs = favorites.filter((e) => e.trackId !== music.trackId);
@@ -78,10 +78,10 @@ export default class Album extends React.Component {
                   </div>
                 ) : (
 
-                  <CardsMusicas
+                  <MusicCard
                     { ...music }
-                    checked={ checkado(music) }
-                    favCheck={ favCheck }
+                    checked={ isChecked(music) }
+                    checkFavorite={ checkFavorite }
                     key={ album[i].trackName }
                   />
 
