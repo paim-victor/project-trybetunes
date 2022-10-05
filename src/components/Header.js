@@ -14,15 +14,13 @@ export default class Header extends Component {
   }
 
   fetchUser = async () => {
-    const resposta = await getUser();
-    // console.log(resposta);
+    const response = await getUser();
     this.setState({
-      usuario: resposta,
+      usuario: response,
     }, () => {
       this.setState({
         loading: false,
       });
-    // console.log(this.state);
     });
   };
 
