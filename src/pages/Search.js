@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import InputButton from './InputButton';
 
-const objPadrao = {
+const obj = {
   inputSearch: '',
   isDesabled: true,
   album: [],
@@ -13,7 +13,7 @@ const objPadrao = {
 
 export default class Search extends Component {
   state = {
-    ...objPadrao,
+    ...obj,
     search: '',
     loading: false,
     btnSearch: false,
@@ -37,7 +37,7 @@ export default class Search extends Component {
       btnSearch: false,
     }), () => {
       this.setState({
-        ...objPadrao,
+        ...obj,
       }, async () => {
         const { search } = this.state;
         const resposta = await searchAlbumsAPI(search);
